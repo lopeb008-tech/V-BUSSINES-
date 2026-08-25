@@ -383,7 +383,7 @@ def handle_message(tg: Telegram, db: Database, message: Dict[str, Any], cfg: Dic
     if step == "compra_amount":
         amount = text.strip()
         cup_total = js_parse_float(amount) * buy_rate
-        store_purchase(db, chat_id, f"Compra de {amount} USDT ({cup_total:g} CUP)", f"Buenas, he comprado {amount} USDT")
+        store_purchase(db, chat_id, f"Compra de {amount} USDT ({cup_total:g} CUP)", f"Buenas, he vendido {amount} USDT")
         upsert_user_state(db, chat_id, username, first_name, "compra_waiting_screenshot")
         tg.send_message(chat_id,
             f"🪙 <b>Compra de Moneda</b>\n\nMonto a comprar: <b>{e(amount)} USDT</b>\nDebes pagar: <b>{cup_total:g} CUP</b>\n\n"
@@ -393,7 +393,7 @@ def handle_message(tg: Telegram, db: Database, message: Dict[str, Any], cfg: Dic
     if step == "venta_amount":
         usdt_amount = js_parse_float(text.strip())
         cup_amount = usdt_amount * sell_rate
-        store_purchase(db, chat_id, f"Venta de {usdt_amount:g} USDT ({cup_amount:g} CUP)", f"Buenas, he vendido {usdt_amount:g} USDT")
+        store_purchase(db, chat_id, f"Venta de {usdt_amount:g} USDT ({cup_amount:g} CUP)", f"Buenas, he comprado {usdt_amount:g} USDT")
         upsert_user_state(db, chat_id, username, first_name, "venta_payment_method")
         tg.send_message(chat_id,
             f"💰 <b>Venta de Moneda</b>\n\nMonto: <b>{usdt_amount:g} USDT</b> = <b>{cup_amount:g} CUP</b>\n"
